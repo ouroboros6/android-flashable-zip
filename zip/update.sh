@@ -8,17 +8,136 @@
 
 # You can extract all your files to $INSTALLDIR, which is a temporary directory.
 
+# Include utils.sh
+source "$INSTALLDIR/utils/utils.sh"
 
-# Example:
+ui_print "Applying overlay updates..."
 
-# ui_print "Applying update..."
-#
-# package_extract_file newbinary $INSTALLDIR/newbinary
-#
-# mv $INSTALLDIR/newbinary /system/bin/newbinary
-#
-# set_metadata /system/bin/newbinary uid root gid shell mode 755
-#
-# inject_selinux_policy -s zygote -t adb_data_file -c dir -p search
-#
-# ui_print "Update successfully installed!"
+# List of overlay directories
+overlay_dirs=(
+    AcherusSignal
+    AcherusSubsSignalG
+    AcherusSubsSignalT
+    AcherusSubsWifiG
+    AcherusSubsWifiT
+    AcherusWiFi
+    AndroidNavbar
+    AsusNavbar
+    AuroraData
+    BarsSignal
+    BarsWiFi
+    BrightnessSliderAcun
+    BrightnessSliderBang
+    BrightnessSliderCyberpunk
+    BrightnessSliderFilled
+    BrightnessSliderGradientRoundedBar
+    BrightnessSliderLeafyOutline
+    BrightnessSliderMinimalThumb
+    BrightnessSliderOutline
+    BrightnessSliderRoundedClip
+    BrightnessSliderShaded
+    BrightnessSliderThin
+    BrightnessSliderTranslucent
+    DerpFestBlackTheme
+    DoraNavbar
+    DoraWiFi
+    FaintUIData
+    FontAclonicaSource
+    FontAmaranteSource
+    FontArbutusSource
+    FontArvoLato
+    FontBariolSource
+    FontCagliostroSource
+    FontComfortaaSource
+    FontComicSansSource
+    FontCoolstorySource
+    FontFluidSans
+    FontHarmonySans
+    FontInterSource
+    FontJetBrainsMono
+    FontJetBrainsMonoNL
+    FontLGSmartGothicSource
+    FontMontserratSource
+    FontNothingDot
+    FontOneplusSlateSource
+    FontRosemarySource
+    FontRubikRubik
+    FontSamsungOneSource
+    FontSonySketchSource
+    FontStoropiaSourceOverlay
+    FontSurferSource
+    FontTinkerbell
+    GradiconData
+    GradiconSignal
+    GradiconWiFi
+    IconDataFive
+    IconDataFour
+    IconDataOne
+    IconDataThree
+    IconDataTwo
+    IconShapeCloudy
+    IconShapeCylindrical
+    IconShapeFlower
+    IconShapeHeart
+    IconShapeHexagon
+    IconShapeIos
+    IconShapeLeaf
+    IconShapePebble
+    IconShapeRiceBalls
+    IconShapeRoundedHexagon
+    IconShapeRoundedRect
+    IconShapeSquare
+    IconShapeSquircle
+    IconShapeStretched
+    IconShapeTaperedRect
+    IconShapeTeardrop
+    IconShapeVessel
+    InsideSignal
+    InsideWiFi
+    IosSignal
+    KronicNavbar
+    LineageQSGradient
+    LivSignal
+    LivWifi
+    LornData
+    MotoNavbar
+    NexusNavbar
+    NothingDotSignal
+    NothingDotWiFi
+    OdineeSignal
+    OldNavbar
+    OnePlusNavbar
+    OneUiNavbar
+    PavlovaWiFi
+    PDNavbar
+    PlumpyData
+    PUISignal
+    RohieIconMeowOverlay
+    RoundQS
+    RoundSignal
+    RoundWiFi
+    SammyNavbar
+    SneakySignal
+    SneakyWiFi
+    StrokeSignal
+    StrokeWiFi
+    TecnoCamonNavbar
+    WannaSignal
+    WavySignal
+    WavyWiFi
+    WeedWiFi
+    WindowsSignal
+    XperiaSignal
+    XperiaWiFi
+    ZigZagSignal
+    ZigZagWiFi
+)
+
+# Copy each directory to /product/overlay
+for dir in "${overlay_dirs[@]}"; do
+    ui_print "Copying $dir to /product/overlay..."
+    package_extract_dir "product/$dir" "/product/overlay/$dir"
+    ui_print "$dir copied."
+done
+
+ui_print "Overlay updates successfully installed!"
